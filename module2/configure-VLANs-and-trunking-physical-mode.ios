@@ -1,0 +1,174 @@
+!S1
+enable
+configure terminal
+hostname S1
+enable secret class
+line console 0
+password cisco
+login
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+banner motd # Unauthorized access is prohibited! #
+interface vlan 1
+ip address 192.168.1.11 255.255.255.0
+no shutdown
+end
+clock set 7:30:00 29 April 2024
+copy running-config startup-config
+
+configure terminal
+vlan 10
+name Operations
+vlan 20
+name Parking_Lot
+vlan 99
+name Management
+vlan 1000
+name Native
+end
+
+show vlan brief
+
+configure terminal
+interface f0/6
+switchport mode access
+switchport access vlan 10
+
+interface vlan 1
+no ip address
+interface vlan 99
+ip address 192.168.1.11 255.255.255.0
+end
+
+show vlan brief
+
+configure terminal
+interface range f0/11-24
+switchport mode access
+switchport access vlan 99
+end
+
+show vlan brief
+
+configure terminal
+interface range f0/11, f0/21
+switchport access vlan 10
+end
+
+show vlan brief
+
+configure terminal
+interface f0/24
+no switchport access vlan
+end
+
+show vlan brief
+
+configure terminal
+interface f0/24
+switchport access vlan 30
+end
+
+show vlan brief
+
+configure terminal
+no vlan 30
+end
+
+show vlan brief
+
+configure terminal
+interface F0/24
+no switchport access vlan
+end
+
+show vlan brief
+
+configure terminal
+interface f0/1
+switchport mode dynamic desirable
+end
+
+show vlan brief
+
+show interfaces trunk
+
+configure terminal
+interface f0/1
+switchport mode trunk
+end
+
+configure terminal
+interface f0/1
+switchport trunk native vlan 1000
+end
+
+show interfaces trunk
+
+
+!S2
+enable
+configure terminal
+hostname S2
+enable secret class
+line console 0
+password cisco
+login
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+banner motd # Unauthorized access is prohibited! #
+interface vlan 1
+ip address 192.168.1.12 255.255.255.0
+no shutdown
+end
+clock set 7:30:00 29 April 2024
+copy running-config startup-config
+
+configure terminal
+vlan 10
+name Operations
+vlan 20
+name Parking_Lot
+vlan 99
+name Management
+vlan 1000
+name Native
+end
+
+configure terminal
+interface f0/18
+switchport mode access
+switchport access vlan 10
+
+interface vlan 1
+no ip address
+interface vlan 99
+ip address 192.168.1.12 255.255.255.0
+end
+
+show vlan brief
+
+show vlan brief
+
+show interfaces trunk
+
+
+
+
+
+
+!PC-A
+ip address: 192.168.10.3
+subnet mask: 255.255.255.0
+default gateway: 192.168.10.1
+
+!PC-B
+ip address: 192.168.10.4
+subnet mask: 255.255.255.0
+default gateway: 192.168.10.1
