@@ -1,0 +1,71 @@
+!SWA
+enable
+configure terminal
+hostname SWA
+banner motd # No Unauthorized Access! #
+enable secret class
+service password-encryption
+line console 0
+password cisco
+login
+line vty 0 15
+password cisco
+login
+exit
+interface range G 0/1-2
+switchport mode trunk
+channel-group 1 mode desirable
+no shutdown
+interface range F 0/21-22
+switchport mode trunk
+channel-group 2 mode active
+no shutdown
+
+
+!SWB
+enable
+configure terminal
+hostname SWB
+banner motd # No Unauthorized Access! #
+enable secret class
+service password-encryption
+line console 0
+password cisco
+login
+line vty 0 15
+password cisco
+login
+exit
+interface range G 0/1-2
+switchport mode trunk
+channel-group 1 mode desirable
+no shutdown
+interface range F 0/23-24
+switchport mode trunk
+channel-group 3 mode passive
+no shutdown
+
+
+
+!SWC
+enable
+configure terminal
+hostname SWC
+banner motd # No Unauthorized Access! #
+enable secret class
+service password-encryption
+line console 0
+password cisco
+login
+line vty 0 15
+password cisco
+login
+exit
+interface range F 0/21-22
+switchport mode trunk
+channel-group 2 mode active
+no shutdown
+interface range F 0/23-24
+switchport mode trunk
+channel-group 3 mode active
+no shutdown
